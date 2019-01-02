@@ -11,4 +11,7 @@ app.use(express.static('./public'));
 //fire the controller
 todoController(app);
 // specify the port the app will run in 
-app.listen(3000);
+//app.listen(3000);
+
+//if u wanna make the port dynamic
+app.listen(process.env.PORT || 3000);
