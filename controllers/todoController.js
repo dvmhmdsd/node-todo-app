@@ -36,9 +36,17 @@ module.exports = function(app) {
     });
 
     // handle post requests
-    app.post('/todo', urlEncodedParser, function(req, res) {
+    /* app.post('/todo', urlEncodedParser, function(req, res) {
         data.push(req.body);
         res.json(data); // to send it to the front-end
+    }); */
+
+    app.post('/todo', urlEncodedParser, function(req, res) {
+        // get data from the view and add it to the db
+        var newItem = Todo(req.body).save(function(err, data) {
+            if (err) throw err;
+            res.json(data); // to send it to the front-end
+        });
     });
 
     // handle delete requests
