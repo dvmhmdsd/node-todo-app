@@ -1,8 +1,25 @@
 var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
 
 var data = [{item: 'play game'}, {item: 'read a book'}];
 
 var urlEncodedParser = bodyParser.urlencoded({extended: false});
+
+//connect with the db
+mongoose.connect('mongodb://test12:test12@ds247674.mlab.com:47674/to-do', { useNewUrlParser: true });
+
+//like a blueprint
+var todoSchema = new mongoose.Schema({
+    item: String
+});
+
+//create a model
+var Todo = mongoose.model('Todo', todoSchema);
+
+var item1 = Todo({item: 'buy flowers'}).save(function(err) {
+    if(err) throw err;
+    console.log('item saved');
+});
 
 module.exports = function(app) {
     // handle get request
