@@ -50,10 +50,17 @@ module.exports = function(app) {
     });
 
     // handle delete requests
-    app.delete('/todo/:item', function(req, res) {
+    /* app.delete('/todo/:item', function(req, res) {
         data = data.filter(function(todo) {
             return todo.item.replace(/ /g, "-") !== req.params.item; // we used replace method to match that on the ajax file
         });
         res.json(data);
+    }); */
+    app.delete('/todo/:item', function(req, res) {
+        Todo.find({item: req.params.item.replace(/\-/g, ' ')}).remove(function(err, data) {
+            if (err) throw err;
+
+            res.json(data);
+        });
     });
 };
