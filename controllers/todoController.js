@@ -15,16 +15,23 @@ var todoSchema = new mongoose.Schema({
 
 //create a model
 var Todo = mongoose.model('Todo', todoSchema);
-
+/* //to push 1 item into the db
 var item1 = Todo({item: 'buy flowers'}).save(function(err) {
     if(err) throw err;
     console.log('item saved');
-});
+}); */
 
 module.exports = function(app) {
     // handle get request
-    app.get('/todo', function(req, res) {
+    /* app.get('/todo', function(req, res) {
         res.render('todo', {todos: data});
+    }); */
+    app.get('/todo', function(req, res) {
+        Todo.find({}, function(err, data) {
+            if (err) throw err;
+
+            res.render('todo', {todos: data});
+        });
     });
 
     // handle post requests
